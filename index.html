@@ -1,0 +1,2456 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brushes N' Blunts – The Original Smoke-Friendly Paint Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #C8102E;
+    --red-dark: #8B0A1F;
+    --cream: #FDF6EC;
+    --black: #111;
+    --off-black: #1A1A1A;
+    --smoke: #2A2A2A;
+    --gold: #C9954C;
+    --gold-light: #E8C68A;
+    --text-muted: #888;
+    --white: #fff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(17,17,17,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,16,46,0.2);
+  }
+  .nav-logo { height: 48px; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--red);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--red-dark); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--off-black);
+  }
+  /* Subtle noise texture on dark left */
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  /* Video covers entire right 58% as background */
+  .hero-video-bg {
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%;
+    height: 80%;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .hero-video-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  /* Overlay: strong fade-from-left keeps text readable, gentle vignette top/bottom */
+  .hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, var(--off-black) 0%, rgba(26,26,26,0.72) 38%, rgba(0,0,0,0.18) 100%),
+      linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, transparent 20%, transparent 78%, rgba(0,0,0,0.32) 100%);
+    z-index: 2;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    padding: 120px 80px 80px;
+    max-width: 700px;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201,149,76,0.4);
+    padding: 6px 14px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 8vw, 100px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 24px;
+  }
+  .hero h1 span { color: var(--red); }
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+  .pill {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    color: rgba(255,255,255,0.7);
+  }
+  .pill.red { border-color: rgba(200,16,46,0.5); color: #ff8095; background: rgba(200,16,46,0.08); }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--red);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border-radius: 2px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.06); }
+  .hero-image {
+    position: absolute;
+    right: -40px; bottom: 0;
+    width: 52%;
+    max-width: 700px;
+    opacity: 0.15;
+    filter: grayscale(100%);
+    pointer-events: none;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px; left: 80px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .scroll-line {
+    width: 40px; height: 1px;
+    background: var(--text-muted);
+  }
+
+  /* ─── VIDEO BANNER ─── */
+  .video-section {
+    background: var(--smoke);
+    padding: 100px 80px;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
+  .video-mock {
+    flex: 0 0 560px;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .video-mock-inner {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, rgba(200,16,46,0.2) 0%, transparent 50%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 40px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .play-btn {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .play-btn:hover { transform: scale(1.1); background: var(--red-dark); }
+  .play-btn svg { margin-left: 4px; }
+  .video-label {
+    position: absolute;
+    bottom: 16px; left: 16px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .video-text { flex: 1; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .video-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .video-text p {
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
+  .stat-row {
+    display: flex;
+    gap: 40px;
+    margin-top: 32px;
+  }
+  .stat-item { }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--red);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ─── COLLECTIONS ─── */
+  .collections-section {
+    padding: 100px 80px;
+    background: var(--black);
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 1;
+  }
+  .section-header h2 span { color: var(--red); }
+  .see-all {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--text-muted);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .see-all:hover { color: white; border-color: white; }
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .collection-card {
+    aspect-ratio: 3/4;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .collection-card:hover { transform: translateY(-6px); }
+  .collection-card:hover .collection-overlay { background: rgba(0,0,0,0.3); }
+  .collection-bg {
+    position: absolute; inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    transition: transform 0.4s;
+  }
+  .collection-card:hover .collection-bg { transform: scale(1.05); }
+  .collection-bg-rb { background: linear-gradient(160deg, #1a0a20 0%, #3d1155 100%); }
+  .collection-bg-st { background: linear-gradient(160deg, #0d1f0d 0%, #1a3d1a 100%); }
+  .collection-bg-dn { background: linear-gradient(160deg, #20090d 0%, #4a0d1a 100%); }
+  .collection-bg-ba { background: linear-gradient(160deg, #0a0a0a 0%, #2a2a2a 100%); }
+  .collection-bg-vr { background: linear-gradient(160deg, #0d1520 0%, #0d2a3d 100%); }
+  .collection-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.45);
+    transition: background 0.3s;
+  }
+  .collection-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 16px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+  }
+  .collection-tag {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+  .collection-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+  }
+  .collection-count {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 4px;
+  }
+
+  /* ─── VINYL FEATURED ─── */
+  .vinyl-section {
+    background: var(--cream);
+    color: var(--black);
+    padding: 100px 80px;
+    display: flex;
+    gap: 80px;
+    align-items: center;
+  }
+  .vinyl-text { flex: 1; }
+  .vinyl-text .section-label { color: var(--red-dark); }
+  .vinyl-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    line-height: 0.95;
+    color: var(--black);
+    margin-bottom: 20px;
+  }
+  .vinyl-text h2 span { color: var(--red); }
+  .vinyl-text p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 32px;
+    max-width: 460px;
+  }
+  .vinyl-features {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+  .vinyl-features li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    font-size: 15px;
+    color: #333;
+  }
+  .vinyl-features li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+  .vinyl-visual {
+    flex: 0 0 460px;
+    position: relative;
+  }
+  .vinyl-record {
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #1a1a1a 0deg, #333 5deg, #1a1a1a 10deg,
+      #333 15deg, #1a1a1a 20deg, #333 25deg, #1a1a1a 30deg,
+      #333 35deg, #1a1a1a 40deg, #333 50deg, #1a1a1a 60deg,
+      #333 70deg, #1a1a1a 80deg, #333 100deg, #1a1a1a 120deg,
+      #333 150deg, #1a1a1a 180deg, #333 210deg, #1a1a1a 240deg,
+      #333 270deg, #1a1a1a 300deg, #333 330deg, #1a1a1a 360deg
+    );
+    position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(255,255,255,0.05);
+    animation: spin 20s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .vinyl-label {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130px; height: 130px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    animation: spin 20s linear infinite reverse;
+  }
+  .vinyl-label-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: white;
+    line-height: 1.2;
+  }
+  .vinyl-label-sub { font-size: 9px; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); }
+  .vinyl-badge {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    border-radius: 2px;
+  }
+  .btn-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--black);
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-dark:hover { background: var(--red-dark); }
+
+  /* ─── BUNDLES ─── */
+  .bundles-section {
+    padding: 100px 80px;
+    background: var(--smoke);
+  }
+  .bundles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .bundle-card {
+    background: var(--off-black);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .bundle-card:hover { border-color: rgba(200,16,46,0.4); transform: translateY(-4px); }
+  .bundle-card.featured {
+    border-color: var(--red);
+    background: linear-gradient(160deg, rgba(200,16,46,0.08) 0%, var(--off-black) 50%);
+  }
+  .bundle-badge {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+  .bundle-badge.gold { background: var(--gold); color: var(--black); }
+  .bundle-icon { font-size: 40px; margin-bottom: 16px; line-height: 1; }
+  .bundle-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 12px;
+    letter-spacing: 0.03em;
+  }
+  .bundle-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .bundle-includes {
+    list-style: none;
+    margin-bottom: 32px;
+  }
+  .bundle-includes li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .bundle-includes li::before {
+    content: '✓';
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .bundle-price {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .price-new {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: white;
+  }
+  .price-old {
+    font-size: 16px;
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+  .price-save {
+    font-size: 12px;
+    color: #4ade80;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  /* ─── COMMUNITY ─── */
+  .community-section {
+    padding: 100px 80px;
+    background: var(--black);
+    text-align: center;
+  }
+  .community-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .community-section h2 span { color: var(--red); }
+  .community-sub {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 60px;
+  }
+  .photo-mosaic {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 220px 220px;
+    gap: 8px;
+    margin-bottom: 48px;
+  }
+  .photo-cell {
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    background: var(--smoke);
+  }
+  .photo-cell:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .photo-cell:nth-child(4) { grid-column: span 2; }
+  .photo-cell:nth-child(6) { grid-column: span 2; }
+  .photo-placeholder {
+    position: absolute; inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .photo-emoji { font-size: 32px; }
+  .photo-caption {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .photo-cell-red .photo-placeholder { background: rgba(200,16,46,0.15); }
+  .photo-cell-gold .photo-placeholder { background: rgba(201,149,76,0.12); }
+  .photo-cell-teal .photo-placeholder { background: rgba(0,120,120,0.12); }
+  .photo-cell-purple .photo-placeholder { background: rgba(120,0,160,0.12); }
+  .city-tags {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .city-tag {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 8px 20px;
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .city-tag:hover { border-color: var(--red); color: white; }
+
+  /* ─── STORY (AYSHA) ─── */
+  .story-section {
+    background: var(--off-black);
+    padding: 100px 80px;
+    display: flex;
+    gap: 100px;
+    align-items: center;
+  }
+  .story-visual {
+    flex: 0 0 400px;
+    position: relative;
+  }
+  .story-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: linear-gradient(160deg, #2a0a0f 0%, #0a0a0a 100%);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    border: 1px solid rgba(200,16,46,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .story-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent, transparent 40px,
+        rgba(200,16,46,0.03) 40px, rgba(200,16,46,0.03) 41px
+      );
+  }
+  .story-initial {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    color: rgba(200,16,46,0.15);
+    line-height: 1;
+    position: relative;
+  }
+  .story-frame-label {
+    position: relative;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 0 32px;
+    line-height: 1.6;
+  }
+  .story-quote-mark {
+    position: absolute;
+    top: -20px; left: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 180px;
+    color: rgba(200,16,46,0.08);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .story-text { flex: 1; }
+  .story-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 54px;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .story-text h2 span { color: var(--red); }
+  .story-body {
+    font-size: 16px;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 20px;
+  }
+  .story-body strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+  .story-signature {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--gold-light);
+    margin-top: 32px;
+  }
+
+  /* ─── REVIEWS ─── */
+  .reviews-section {
+    padding: 100px 80px;
+    background: var(--black);
+  }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 56px;
+  }
+  .review-card {
+    background: var(--off-black);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 32px 28px;
+    transition: border-color 0.2s;
+  }
+  .review-card:hover { border-color: rgba(200,16,46,0.3); }
+  .review-stars {
+    color: var(--gold);
+    font-size: 14px;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+  }
+  .review-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 20px;
+  }
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .review-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .review-name { font-size: 14px; font-weight: 500; }
+  .review-loc { font-size: 12px; color: var(--text-muted); }
+
+  /* ─── SUBSCRIPTION ─── */
+  .sub-section {
+    background: linear-gradient(135deg, #1a0509 0%, var(--smoke) 100%);
+    padding: 100px 80px;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+  }
+  .sub-text { flex: 1; }
+  .sub-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .sub-text h2 span { color: var(--red); }
+  .sub-text p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    margin-bottom: 32px;
+    max-width: 400px;
+  }
+  .sub-perks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .perk {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.5;
+  }
+  .perk-icon {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(200,16,46,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .sub-card {
+    flex: 0 0 360px;
+    background: var(--off-black);
+    border: 1px solid rgba(200,16,46,0.3);
+    border-radius: 4px;
+    padding: 48px 40px;
+    text-align: center;
+  }
+  .sub-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    line-height: 1;
+    color: var(--red);
+  }
+  .sub-period {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+  .sub-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .sub-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  /* ─── EMAIL CAPTURE ─── */
+  .email-section {
+    background: var(--red);
+    padding: 80px;
+    text-align: center;
+  }
+  .email-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .email-section p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 40px;
+  }
+  .email-form {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto 20px;
+  }
+  .email-input {
+    flex: 1;
+    padding: 16px 20px;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-right: none;
+    color: white;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    border-radius: 2px 0 0 2px;
+  }
+  .email-input::placeholder { color: rgba(255,255,255,0.5); }
+  .email-btn {
+    background: var(--black);
+    color: white;
+    border: none;
+    padding: 16px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 0 2px 2px 0;
+    transition: background 0.2s;
+  }
+  .email-btn:hover { background: var(--smoke); }
+  .email-disclaimer {
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* ─── CREDIBILITY ─── */
+  .cred-section {
+    background: var(--off-black);
+    padding: 60px 80px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .cred-header {
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+  .cred-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 48px;
+  }
+  .cred-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.2);
+    transition: color 0.2s;
+  }
+  .cred-logo:hover { color: rgba(255,255,255,0.6); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #0a0a0a;
+    padding: 64px 80px 40px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+  }
+  .footer-brand img { height: 48px; margin-bottom: 20px; }
+  .footer-brand p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+  .footer-socials { display: flex; gap: 12px; }
+  .social-link {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .social-link:hover { border-color: var(--red); color: white; }
+  .footer-col h4 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: white; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy { font-size: 12px; color: var(--text-muted); }
+  .footer-legal {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+  .footer-legal a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .footer-legal a:hover { color: white; }
+
+  /* ─── FLOATING CTA ─── */
+  .float-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    background: rgba(26,26,26,0.95);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(200,16,46,0.3);
+    border-radius: 100px;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  }
+  .float-text { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .float-text strong { color: white; }
+  .float-btn {
+    background: var(--red);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border-radius: 100px;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .float-btn:hover { background: var(--red-dark); }
+
+  /* ─── RIP N' REFLECT PROMO ─── */
+  .rnr-promo {
+    background: linear-gradient(135deg, #0d0d1a 0%, #1a0a20 50%, #0a0d1a 100%);
+    padding: 100px 80px;
+    border-top: 1px solid rgba(167,139,250,0.15);
+    border-bottom: 1px solid rgba(167,139,250,0.15);
+  }
+  .rnr-promo-inner {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .rnr-promo-text { flex: 1; }
+  .rnr-card-preview { flex: 0 0 320px; }
+  .rnr-card-demo {
+    background: linear-gradient(160deg, #1e1030 0%, #0f0a1e 100%);
+    border: 1px solid rgba(167,139,250,0.3);
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-align: center;
+    box-shadow: 0 24px 64px rgba(100,60,200,0.2);
+  }
+  .rnr-card-logo {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    display: block;
+    margin-bottom: 24px;
+  }
+  .rnr-card-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: white;
+    margin-bottom: 16px;
+    min-height: 60px;
+    transition: opacity 0.3s;
+  }
+  .rnr-card-type {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  .rnr-card-btns {
+    display: flex;
+    gap: 10px;
+  }
+  .rnr-mini-btn {
+    flex: 1;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: transform 0.15s, opacity 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .rnr-mini-btn:hover { transform: translateY(-2px); }
+  .rnr-mini-btn.rip { background: rgba(200,16,46,0.2); color: #ff8095; border: 1px solid rgba(200,16,46,0.4); }
+  .rnr-mini-btn.reflect { background: rgba(167,139,250,0.15); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.3); }
+
+  /* ─── RIP N' REFLECT FULL SECTION ─── */
+  .rnr-section {
+    background: #080810;
+    padding: 100px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .rnr-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 30% 20%, rgba(167,139,250,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 80% 80%, rgba(200,16,46,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .rnr-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .rnr-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 10vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, #fff 0%, #c4b5fd 50%, #ff8095 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+  .rnr-subtitle {
+    font-size: 17px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.8;
+    max-width: 540px;
+    margin: 0 auto 40px;
+  }
+  .rnr-mode-btns {
+    display: inline-flex;
+    gap: 0;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    padding: 4px;
+    margin-bottom: 16px;
+  }
+  .rnr-mode-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.5);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 10px 28px;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .rnr-mode-btn.active { background: var(--red); color: white; }
+  .rnr-mode-btn:not(.active):hover { color: white; }
+  .rnr-mode-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.04em;
+    margin-bottom: 60px;
+  }
+  .rnr-game-area { max-width: 560px; margin: 0 auto 48px; position: relative; }
+  .rnr-card-wrap {
+    perspective: 1000px;
+    margin-bottom: 40px;
+  }
+  .rnr-main-card {
+    height: 300px;
+    position: relative;
+  }
+  .rnr-card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .rnr-card-inner.flipping { transform: rotateY(180deg); }
+  .rnr-card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 36px;
+    gap: 12px;
+  }
+  .rnr-card-front {
+    background: linear-gradient(160deg, #1e1030 0%, #100820 60%, #0a0614 100%);
+    border: 1px solid rgba(167,139,250,0.25);
+    box-shadow: 0 32px 80px rgba(100,60,200,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .rnr-card-front.rip-style {
+    background: linear-gradient(160deg, #200a12 0%, #120008 60%, #0a0005 100%);
+    border-color: rgba(200,16,46,0.3);
+    box-shadow: 0 32px 80px rgba(200,16,46,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .rnr-card-brand {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 8px;
+  }
+  .rnr-card-mode-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    background: rgba(167,139,250,0.15);
+    color: #c4b5fd;
+    border: 1px solid rgba(167,139,250,0.25);
+  }
+  .rnr-card-mode-tag.rip-tag {
+    background: rgba(200,16,46,0.15);
+    color: #ff8095;
+    border-color: rgba(200,16,46,0.3);
+  }
+  .rnr-question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    line-height: 1.5;
+    color: white;
+    text-align: center;
+    transition: opacity 0.2s;
+  }
+  .rnr-card-number {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .rnr-draw-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .rnr-draw-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 20px 24px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .rnr-draw-btn:hover { transform: translateY(-3px); }
+  .rip-btn {
+    background: linear-gradient(135deg, rgba(200,16,46,0.25) 0%, rgba(200,16,46,0.1) 100%);
+    border: 1px solid rgba(200,16,46,0.4) !important;
+    box-shadow: 0 8px 32px rgba(200,16,46,0.15);
+  }
+  .rip-btn:hover { box-shadow: 0 16px 48px rgba(200,16,46,0.3); }
+  .reflect-btn {
+    background: linear-gradient(135deg, rgba(167,139,250,0.2) 0%, rgba(167,139,250,0.08) 100%);
+    border: 1px solid rgba(167,139,250,0.35) !important;
+    box-shadow: 0 8px 32px rgba(167,139,250,0.1);
+  }
+  .reflect-btn:hover { box-shadow: 0 16px 48px rgba(167,139,250,0.25); }
+  .rnr-btn-icon { font-size: 28px; }
+  .rnr-btn-label { font-size: 14px; font-weight: 700; color: white; letter-spacing: 0.05em; }
+  .rnr-btn-sub { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.05em; }
+  .rnr-or { font-size: 13px; color: rgba(255,255,255,0.25); flex-shrink: 0; }
+  .rnr-counter-row { margin-bottom: 8px; }
+  .rnr-counter-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .rnr-counter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--red) 0%, #a78bfa 100%);
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+  .rnr-counter-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.05em;
+  }
+  .rnr-gate {
+    max-width: 560px;
+    margin: 0 auto 48px;
+  }
+  .rnr-gate-card {
+    background: linear-gradient(160deg, #1a0a1a 0%, #0a0a0a 100%);
+    border: 1px solid rgba(167,139,250,0.3);
+    border-radius: 20px;
+    padding: 48px 40px;
+    text-align: center;
+  }
+  .rnr-email-gate {
+    display: flex;
+    gap: 0;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .rnr-email-input {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-right: none;
+    color: white;
+    padding: 14px 18px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    border-radius: 8px 0 0 8px;
+  }
+  .rnr-email-input::placeholder { color: rgba(255,255,255,0.3); }
+  .rnr-email-submit {
+    background: #7c3aed;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    border-radius: 0 8px 8px 0;
+    transition: background 0.2s;
+  }
+  .rnr-email-submit:hover { background: #6d28d9; }
+  .rnr-vibes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .rnr-vibe-pill {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 18px;
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .rnr-vibe-pill:hover { border-color: rgba(167,139,250,0.4); color: #c4b5fd; cursor: default; }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — TABLET  (≤ 1024px)
+  ══════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    /* Nav */
+    nav { padding: 14px 32px; }
+    .nav-links { gap: 20px; }
+    .nav-links a { font-size: 12px; }
+
+    /* Hero */
+    .hero-content { padding: 100px 48px 80px; max-width: 540px; }
+
+    /* Video section */
+    .video-section { padding: 80px 48px; gap: 48px; }
+    .video-mock { flex: 0 0 400px; }
+
+    /* Collections */
+    .collections-section { padding: 80px 48px; }
+    .collections-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    /* Vinyl */
+    .vinyl-section { padding: 80px 48px; gap: 48px; }
+    .vinyl-visual { flex: 0 0 340px; }
+    .vinyl-record { width: 280px; height: 280px; }
+
+    /* Bundles */
+    .bundles-section { padding: 80px 48px; }
+
+    /* Community */
+    .community-section { padding: 80px 48px; }
+    .photo-mosaic { grid-template-rows: 180px 180px; }
+
+    /* Story */
+    .story-section { padding: 80px 48px; gap: 60px; }
+    .story-visual { flex: 0 0 300px; }
+
+    /* Reviews */
+    .reviews-section { padding: 80px 48px; }
+    .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Sub */
+    .sub-section { padding: 80px 48px; gap: 48px; }
+    .sub-card { flex: 0 0 300px; padding: 36px 28px; }
+
+    /* Email / cred / footer */
+    .email-section { padding: 64px 48px; }
+    .cred-section { padding: 48px; }
+    .cred-logos { gap: 32px; }
+    footer { padding: 56px 48px 32px; }
+    .footer-grid { gap: 40px; }
+
+    /* RNR promo */
+    .rnr-promo { padding: 80px 48px; }
+    .rnr-section { padding: 80px 48px; }
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — MOBILE  (≤ 768px)
+  ══════════════════════════════════════ */
+  @media (max-width: 768px) {
+
+    /* ── NAV: hamburger-style, hide links ── */
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .nav-cta { padding: 9px 18px; font-size: 12px; }
+    .nav-logo { height: 36px; }
+
+    /* ── HERO ── */
+    .hero { min-height: 100svh; }
+    .hero-video-bg { width: 100%; opacity: 0.28; }
+    .hero-video-overlay {
+      background: linear-gradient(to bottom,
+        rgba(26,26,26,0.75) 0%,
+        rgba(26,26,26,0.45) 50%,
+        rgba(26,26,26,0.75) 100%);
+    }
+    .hero-content {
+      padding: 100px 20px 80px;
+      max-width: 100%;
+    }
+    .hero h1 { font-size: clamp(48px, 13vw, 72px); }
+    .hero-sub { font-size: 16px; max-width: 100%; }
+    .hero-pills { gap: 8px; }
+    .pill { font-size: 11px; padding: 6px 12px; }
+    .hero-ctas { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; padding: 15px 24px; }
+    .hero-scroll { left: 20px; bottom: 24px; }
+
+    /* ── VIDEO SECTION ── */
+    .video-section {
+      flex-direction: column;
+      padding: 60px 20px;
+      gap: 36px;
+    }
+    .video-mock { flex: none; width: 100%; aspect-ratio: 16/9; }
+    .video-text h2 { font-size: 38px; }
+    .stat-row { gap: 24px; }
+    .stat-num { font-size: 32px; }
+
+    /* ── COLLECTIONS ── */
+    .collections-section { padding: 60px 20px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 32px; }
+    .section-header h2 { font-size: 40px; }
+    .collections-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .collection-name { font-size: 17px; }
+
+    /* ── VINYL ── */
+    .vinyl-section {
+      flex-direction: column-reverse;
+      padding: 60px 20px;
+      gap: 40px;
+    }
+    .vinyl-visual { flex: none; width: 100%; display: flex; justify-content: center; }
+    .vinyl-record { width: 240px; height: 240px; }
+    .vinyl-text h2 { font-size: 44px; }
+    .btn-dark { width: 100%; justify-content: center; }
+
+    /* ── BUNDLES ── */
+    .bundles-section { padding: 60px 20px; }
+    .bundles-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 36px; }
+    .bundle-card { padding: 28px 24px; }
+    .bundle-name { font-size: 28px; }
+
+    /* ── COMMUNITY PHOTOS ── */
+    .community-section { padding: 60px 20px; }
+    .community-section h2 { font-size: 36px; }
+    .community-sub { font-size: 14px; margin-bottom: 36px; }
+    .photo-mosaic {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(4, 160px);
+      gap: 6px;
+    }
+    /* Reset all span overrides for mobile simple 2-col */
+    .photo-cell:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+    .photo-cell:nth-child(4) { grid-column: span 1; }
+    .photo-cell:nth-child(6) { grid-column: span 1; }
+    .city-tags { gap: 8px; }
+    .city-tag { font-size: 11px; padding: 6px 14px; }
+
+    /* ── STORY ── */
+    .story-section {
+      flex-direction: column;
+      padding: 60px 20px;
+      gap: 40px;
+    }
+    .story-visual { flex: none; width: 100%; max-width: 280px; margin: 0 auto; }
+    .story-initial { font-size: 80px; }
+    .story-text h2 { font-size: 40px; }
+    .story-body { font-size: 15px; }
+    .story-signature { font-size: 20px; }
+    .story-quote-mark { font-size: 120px; left: 20px; }
+
+    /* ── REVIEWS ── */
+    .reviews-section { padding: 60px 20px; }
+    .reviews-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 32px;
+    }
+    .review-card { padding: 24px 20px; }
+    .review-text { font-size: 15px; }
+
+    /* ── SUBSCRIPTION ── */
+    .sub-section {
+      flex-direction: column;
+      padding: 60px 20px;
+      gap: 40px;
+    }
+    .sub-text h2 { font-size: 44px; }
+    .sub-perks { grid-template-columns: 1fr; gap: 12px; }
+    .sub-card { flex: none; width: 100%; padding: 32px 24px; }
+    .sub-price { font-size: 64px; }
+
+    /* ── RNR PROMO ── */
+    .rnr-promo { padding: 60px 20px; }
+    .rnr-promo-inner {
+      flex-direction: column;
+      gap: 40px;
+    }
+    .rnr-promo-text h2 { font-size: 40px !important; }
+    .rnr-promo-text .btn-primary,
+    .rnr-promo-text .btn-secondary { width: 100%; justify-content: center; }
+    .rnr-card-preview { flex: none; width: 100%; max-width: 320px; margin: 0 auto; }
+
+    /* ── RNR CARD GAME SECTION ── */
+    .rnr-section { padding: 60px 20px; }
+    .rnr-title { font-size: clamp(52px, 16vw, 90px); }
+    .rnr-subtitle { font-size: 15px; }
+    .rnr-mode-btn { padding: 9px 18px; font-size: 13px; }
+    .rnr-game-area { max-width: 100%; }
+    .rnr-main-card { height: 260px; }
+    .rnr-question-text { font-size: 19px; }
+    .rnr-draw-area { flex-direction: column; gap: 12px; }
+    .rnr-draw-btn { width: 100%; flex-direction: row; justify-content: center; gap: 12px; padding: 16px 20px; }
+    .rnr-or { display: none; }
+    .rnr-btn-icon { font-size: 22px; }
+    .rnr-gate-card { padding: 32px 20px; }
+    .rnr-email-gate { flex-direction: column; }
+    .rnr-email-input { border-right: 1px solid rgba(255,255,255,0.15); border-radius: 8px; margin-bottom: 8px; }
+    .rnr-email-submit { border-radius: 8px; padding: 14px; }
+
+    /* ── EMAIL CAPTURE ── */
+    .email-section { padding: 56px 20px; }
+    .email-section h2 { font-size: 40px; }
+    .email-form { flex-direction: column; max-width: 100%; gap: 10px; }
+    .email-input { border-right: 1px solid rgba(255,255,255,0.3); border-radius: 2px; }
+    .email-btn { border-radius: 2px; padding: 16px; }
+
+    /* ── CREDIBILITY ── */
+    .cred-section { padding: 40px 20px; }
+    .cred-logos { gap: 20px; }
+    .cred-logo { font-size: 14px; }
+
+    /* ── FOOTER ── */
+    footer { padding: 48px 20px 28px; }
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .footer-brand { text-align: center; }
+    .footer-socials { justify-content: center; }
+    .footer-col h4 { margin-top: 8px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-legal { justify-content: center; }
+
+    /* ── FLOATING BAR ── */
+    .float-bar {
+      width: calc(100% - 32px);
+      left: 16px;
+      right: 16px;
+      transform: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      gap: 12px;
+    }
+    .float-text { font-size: 12px; }
+    .float-btn { font-size: 11px; padding: 8px 14px; white-space: nowrap; }
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — SMALL PHONES  (≤ 400px)
+  ══════════════════════════════════════ */
+  @media (max-width: 400px) {
+    .hero h1 { font-size: 42px; }
+    .hero-eyebrow { font-size: 10px; }
+    .collections-grid { grid-template-columns: 1fr; }
+    .collection-card { aspect-ratio: 4/3; }
+    .photo-mosaic { grid-template-columns: 1fr; grid-template-rows: repeat(7, 140px); }
+    .photo-cell:nth-child(n) { grid-column: span 1; grid-row: span 1; }
+    .rnr-title { font-size: 44px; }
+    .section-header h2 { font-size: 34px; }
+    .bundle-name { font-size: 24px; }
+    .float-text strong + span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img class="nav-logo" src="IMG_3689-removebg-preview.webp" alt="Brushes N' Blunts" onerror="this.style.display='none'; document.getElementById('nav-text').style.display='block'">
+  <span id="nav-text" style="display:none; font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.05em;">BRUSHES N' <span style="color:var(--red)">BLUNTS</span></span>
+  <ul class="nav-links">
+    <li><a href="#collections">Shop</a></li>
+    <li><a href="#vinyl">Vinyl Kits</a></li>
+    <li><a href="#bundles">Bundles</a></li>
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#rip-reflect" style="color:var(--gold)">🃏 Card Game</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Shop Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <!-- Video background: fills right side -->
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="hero-video.mp4" type="video/mp4">
+    </video>
+  </div>
+  <!-- Overlay fades video into dark background on the left -->
+  <div class="hero-video-overlay"></div>
+  <!-- Left-side text content sits above everything -->
+  <div class="hero-content">
+    <span class="hero-eyebrow">Est. in Love & Legacy</span>
+    <h1>The Original<br><span>Smoke-Friendly</span><br>Paint Experience</h1>
+    <p class="hero-sub">Where creativity meets culture. Paint parties, vinyl kits, and good vibes — delivered to your door or hosted in your city.</p>
+    <div class="hero-pills">
+      <span class="pill red">🎨 Paint Parties Nationwide</span>
+      <span class="pill">📦 DIY Kits Delivered</span>
+      <span class="pill">🎴 Puff N' Process Card Game</span>
+      <span class="pill">🌍 Worldwide Shipping</span>
+    </div>
+    <div class="hero-ctas">
+      <a href="#collections" class="btn-primary">Shop Now &rarr;</a>
+      <a href="#events" class="btn-secondary">Book A Party</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<!-- VIDEO BANNER -->
+<section class="video-section" id="about">
+  <div class="video-mock">
+    <div class="video-mock-inner">
+      <div class="play-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+    <span class="video-label">Watch the vibe &rarr;</span>
+  </div>
+  <div class="video-text">
+    <div class="section-label">The Experience</div>
+    <h2>Painting.<br>Laughing.<br>Living.</h2>
+    <p>Add your 30-second reel here showing the full Brushes N' Blunts experience — music, smoke-friendly vibes, finished artwork, and real people connecting through creativity.</p>
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="stat-num">5K+</div>
+        <div class="stat-label">Canvases Painted</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Cities Reached</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Smoke Friendly</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section class="collections-section" id="collections">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Shop By Vibe</div>
+      <h2>Find Your <span>Collection</span></h2>
+    </div>
+    <a href="#" class="see-all">View All Collections &rarr;</a>
+  </div>
+  <div class="collections-grid">
+    <div class="collection-card">
+      <div class="collection-bg collection-bg-rb">🎵</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Feel the rhythm</div>
+        <div class="collection-name">R&B Collection</div>
+        <div class="collection-count">12 products</div>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg collection-bg-st">🍃</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Elevated creativity</div>
+        <div class="collection-name">Stoner Collection</div>
+        <div class="collection-count">8 products</div>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg collection-bg-dn">💕</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">For two</div>
+        <div class="collection-name">Date Night Collection</div>
+        <div class="collection-count">6 products</div>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg collection-bg-ba">✊🏾</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Rooted in culture</div>
+        <div class="collection-name">Black Art Collection</div>
+        <div class="collection-count">10 products</div>
+      </div>
+    </div>
+    <div class="collection-card">
+      <div class="collection-bg collection-bg-vr">🎵</div>
+      <div class="collection-overlay"></div>
+      <div class="collection-info">
+        <div class="collection-tag">Our signature</div>
+        <div class="collection-name">Vinyl Record Collection</div>
+        <div class="collection-count">9 products</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VINYL FEATURED -->
+<section class="vinyl-section" id="vinyl">
+  <div class="vinyl-text">
+    <div class="section-label">Our Signature Product</div>
+    <h2>Paint On<br><span>Vinyl.</span><br>Nobody Does It Like Us.</h2>
+    <p>Forget canvas. We paint on real vinyl records — blending music, memory, and art into something you can hang on your wall. Culturally rooted. Completely unique. Yours.</p>
+    <ul class="vinyl-features">
+      <li>Real vinyl record as your canvas</li>
+      <li>Step-by-step digital guide included</li>
+      <li>All paints & brushes provided</li>
+      <li>Available in 10+ iconic designs</li>
+      <li>Worldwide shipping available</li>
+    </ul>
+    <a href="#" class="btn-dark">Shop Vinyl Kits &rarr;</a>
+  </div>
+  <div class="vinyl-visual">
+    <div class="vinyl-record">
+      <div class="vinyl-label">
+        <div class="vinyl-label-text">BRUSHES N'<br>BLUNTS</div>
+        <div class="vinyl-label-sub">vinyl art kit</div>
+      </div>
+    </div>
+    <div class="vinyl-badge">Most Unique Gift</div>
+  </div>
+</section>
+
+<!-- BUNDLES -->
+<section class="bundles-section" id="bundles">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Save More</div>
+      <h2>Bundle <span style="color:var(--red)">Deals</span></h2>
+    </div>
+  </div>
+  <div class="bundles-grid">
+    <div class="bundle-card featured">
+      <div class="bundle-badge">Best Seller</div>
+      <div class="bundle-icon">💑</div>
+      <div class="bundle-name">Couples Bundle</div>
+      <div class="bundle-desc">The perfect date night — create together, laugh together, hang it on the wall together.</div>
+      <ul class="bundle-includes">
+        <li>2 Paint Kits</li>
+        <li>Puff N' Process Card Game</li>
+        <li>Free Shipping</li>
+      </ul>
+      <div class="bundle-price">
+        <span class="price-new">$59</span>
+        <span class="price-old">$69</span>
+        <span class="price-save">Save 15%</span>
+      </div>
+      <a href="#" class="btn-primary" style="margin-top: 24px; display: inline-flex;">Add to Cart</a>
+    </div>
+    <div class="bundle-card">
+      <div class="bundle-badge gold">Group Vibe</div>
+      <div class="bundle-icon">👯‍♀️</div>
+      <div class="bundle-name">Girls Night Bundle</div>
+      <div class="bundle-desc">Turn girls night into an experience nobody forgets. Five kits, zero drama, all paint.</div>
+      <ul class="bundle-includes">
+        <li>5 Paint Kits</li>
+        <li>Free Shipping Included</li>
+        <li>Exclusive Group Discount</li>
+      </ul>
+      <div class="bundle-price">
+        <span class="price-new">$110</span>
+        <span class="price-old">$130</span>
+        <span class="price-save">Save 15%</span>
+      </div>
+      <a href="#" class="btn-secondary" style="margin-top: 24px; display: inline-flex;">Add to Cart</a>
+    </div>
+    <div class="bundle-card">
+      <div class="bundle-badge" style="background: var(--smoke); color: white; border: 1px solid rgba(255,255,255,0.15);">Limited Edition</div>
+      <div class="bundle-icon">🌿</div>
+      <div class="bundle-name">Soft Life Stoner Bundle</div>
+      <div class="bundle-desc">Vinyl + game + sticker. The full smoke-friendly creative package for the elevated artist.</div>
+      <ul class="bundle-includes">
+        <li>Vinyl Record Kit</li>
+        <li>Puff N' Process Card Game</li>
+        <li>Limited Edition Sticker</li>
+      </ul>
+      <div class="bundle-price">
+        <span class="price-new">$65</span>
+        <span class="price-old">$78</span>
+        <span class="price-save">Save 17%</span>
+      </div>
+      <a href="#" class="btn-secondary" style="margin-top: 24px; display: inline-flex;">Add to Cart</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY PHOTOS -->
+<section class="community-section" id="events">
+  <div class="section-label">The Community</div>
+  <h2>Thousands of Brush Strokes.<br>One <span>Community.</span></h2>
+  <p class="community-sub">Real people. Real events. Real art. Add your photos below to show the world what Brushes N' Blunts looks like.</p>
+  <div class="photo-mosaic">
+    <div class="photo-cell photo-cell-red">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">📸</div>
+        <div class="photo-caption">NYC Event</div>
+      </div>
+    </div>
+    <div class="photo-cell photo-cell-gold">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">🎨</div>
+        <div class="photo-caption">Boston</div>
+      </div>
+    </div>
+    <div class="photo-cell photo-cell-teal">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">🎵</div>
+        <div class="photo-caption">Vinyl Painting</div>
+      </div>
+    </div>
+    <div class="photo-cell photo-cell-purple">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">💑</div>
+        <div class="photo-caption">Couples Night</div>
+      </div>
+    </div>
+    <div class="photo-cell photo-cell-red">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">✨</div>
+        <div class="photo-caption">Houston</div>
+      </div>
+    </div>
+    <div class="photo-cell photo-cell-gold">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">🃏</div>
+        <div class="photo-caption">Puff N' Process</div>
+      </div>
+    </div>
+    <div class="photo-cell photo-cell-teal">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">🌿</div>
+        <div class="photo-caption">Brooklyn</div>
+      </div>
+    </div>
+    <div class="photo-cell photo-cell-purple">
+      <div class="photo-placeholder">
+        <div class="photo-emoji">🎭</div>
+        <div class="photo-caption">Cambridge</div>
+      </div>
+    </div>
+  </div>
+  <div class="city-tags">
+    <span class="city-tag">New York City</span>
+    <span class="city-tag">Boston</span>
+    <span class="city-tag">Houston</span>
+    <span class="city-tag">Brooklyn</span>
+    <span class="city-tag">Cambridge</span>
+    <span class="city-tag">Your City Next →</span>
+  </div>
+</section>
+
+<!-- AYSHA'S STORY -->
+<section class="story-section" id="story">
+  <div class="story-visual">
+    <div class="story-frame">
+      <div class="story-initial">A</div>
+      <div class="story-frame-label">In loving memory & lasting legacy</div>
+    </div>
+    <div class="story-quote-mark">"</div>
+  </div>
+  <div class="story-text">
+    <div class="section-label">Why We Exist</div>
+    <h2>Built in <span>Love.</span><br>Growing in Legacy.</h2>
+    <p class="story-body">
+      Brushes N' Blunts didn't start as a business plan. It started as a <strong>name</strong> — one that meant something deeply personal. The name was created by <strong>Aysha</strong>, and everything built since has been in her honor.
+    </p>
+    <p class="story-body">
+      This brand is proof that creativity doesn't have a ceiling, that <strong>culture deserves its own canvas</strong>, and that art is one of the most powerful ways to heal, connect, and celebrate the people we love.
+    </p>
+    <p class="story-body">
+      When you buy a kit, book a party, or send a bundle to a friend — you're not just buying paint. You're <strong>carrying a story forward</strong>. And that story matters.
+    </p>
+    <div class="story-signature">— Brushes N' Blunts, for Aysha.</div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Social Proof</div>
+      <h2>What People <span style="color:var(--red)">Are Saying</span></h2>
+    </div>
+    <a href="#" class="see-all">Read All Reviews &rarr;</a>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Best date night we've had in years. We're hanging ours in the living room."</div>
+      <div class="review-author">
+        <div class="review-avatar">JM</div>
+        <div><div class="review-name">Jasmine M.</div><div class="review-loc">New York, NY</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"The vinyl kit was amazing. I painted over my favorite album — it came out PERFECT."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#7c3aed;">DT</div>
+        <div><div class="review-name">Darius T.</div><div class="review-loc">Houston, TX</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"We booked Brushes N' Blunts for our private party and everyone absolutely loved it. 10/10."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#0f766e;">AK</div>
+        <div><div class="review-name">Aisha K.</div><div class="review-loc">Boston, MA</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Puff N' Process got us all opening up in ways we didn't expect. Deep game, real conversations."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#b45309;">RL</div>
+        <div><div class="review-name">Ray L.</div><div class="review-loc">Brooklyn, NY</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Shipped super fast. The kit had everything — instructions were easy and the final piece looks professional."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#be185d;">NW</div>
+        <div><div class="review-name">Nia W.</div><div class="review-loc">Cambridge, MA</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"I ordered the couples bundle as a gift. They sent me photos of the finished paintings — I cried. Worth every penny."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#1d4ed8;">TC</div>
+        <div><div class="review-name">Tiana C.</div><div class="review-loc">Philadelphia, PA</div></div>
+      </div>
+    </div>
+  </div>
+  <!-- Row 2 reviews -->
+  <div class="reviews-grid" style="margin-top:20px;">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Showed up to a solo session with the Soft Life Stoner Bundle. Painted for two hours straight. Most peaceful evening I've had in months."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#065f46;">KJ</div>
+        <div><div class="review-name">Kamila J.</div><div class="review-loc">Atlanta, GA</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"We booked a private event for my sister's birthday. 20 people, all different ages, all having the time of their lives. BNB made it easy."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#9d174d;">MB</div>
+        <div><div class="review-name">Marcus B.</div><div class="review-loc">Houston, TX</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"The R&B Collection vinyl kit was everything. Painted over an old Marvin Gaye album — it's the centerpiece of my living room now."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#7c3aed;">SH</div>
+        <div><div class="review-name">Sierra H.</div><div class="review-loc">Brooklyn, NY</div></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">"Puff N' Process during a girls trip changed the whole vibe. Everyone got emotional in the best way. 10 of us are ordering individual kits now."</div>
+      <div class="review-author">
+        <div class="review-avatar" style="background:#b45309;">LP</div>
+        <div><div class="review-name">Lyric P.</div><div class="review-loc">Cambridge, MA</div></div>
+      </div>
+    </div>
+</section>
+
+<!-- SUBSCRIPTION -->
+<section class="sub-section">
+  <div class="sub-text">
+    <div class="section-label">Recurring Revenue · Exclusive Access</div>
+    <h2>The <span>BNB</span> Club</h2>
+    <p>Monthly drops, exclusive discounts, members-only events, and early access to every new kit. Paid community for real ones.</p>
+    <div class="sub-perks">
+      <div class="perk"><div class="perk-icon">🎨</div><div>Monthly digital art tutorial</div></div>
+      <div class="perk"><div class="perk-icon">🏷️</div><div>Exclusive member discounts</div></div>
+      <div class="perk"><div class="perk-icon">📦</div><div>Early access to new kits</div></div>
+      <div class="perk"><div class="perk-icon">🎉</div><div>Members-only events</div></div>
+    </div>
+  </div>
+  <div class="sub-card">
+    <div class="sub-name">The BNB Club</div>
+    <div class="sub-tagline">Monthly creative membership for the<br>Brushes N' Blunts community</div>
+    <div class="sub-price">$19</div>
+    <div class="sub-period">/month · cancel anytime</div>
+    <a href="#" class="btn-primary" style="width: 100%; justify-content: center;">Join The Club &rarr;</a>
+    <p style="font-size:12px; color:rgba(255,255,255,0.35); margin-top:16px; line-height:1.6;">Cancel anytime. No commitments.<br>First month includes a free sticker.</p>
+  </div>
+</section>
+
+<!-- CREDIBILITY -->
+<section class="cred-section">
+  <div class="cred-header">Trusted By Communities Across The Country</div>
+  <div class="cred-logos">
+    <div class="cred-logo">NYC EVENTS</div>
+    <div class="cred-logo">BOSTON COLLECTIVE</div>
+    <div class="cred-logo">HOUSTON ARTS</div>
+    <div class="cred-logo">BROOKLYN UNDERGROUND</div>
+    <div class="cred-logo">CAMBRIDGE COMMUNITY</div>
+    <div class="cred-logo">NATIONWIDE EVENTS</div>
+  </div>
+</section>
+
+<!-- RIP N REFLECT PROMO BLOCK -->
+<section class="rnr-promo" id="rip-reflect-promo">
+  <div class="rnr-promo-inner">
+    <div class="rnr-promo-text">
+      <div class="section-label" style="color:var(--gold)">Free to Play · Unlock More</div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:54px;line-height:1;margin-bottom:16px;">RIP N' <span style="color:var(--red)">REFLECT</span><br>Digital Card Game</h2>
+      <p style="font-size:16px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:32px;max-width:460px;">Pull a card from your phone. Rip it (funny) or reflect on it (deep). Perfect for smoke sessions, date nights, parties, and solo healing. Try 10 free cards — unlock 100+ when you're ready.</p>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="#rip-reflect" class="btn-primary">Play Free Now &rarr;</a>
+        <a href="#rip-reflect" class="btn-secondary">Unlock Full Deck</a>
+      </div>
+    </div>
+    <div class="rnr-card-preview">
+      <div class="rnr-card-demo">
+        <div class="rnr-card-top">
+          <span class="rnr-card-logo">🃏 RIP N' REFLECT</span>
+        </div>
+        <div class="rnr-card-question" id="promo-card-q">What are you currently healing from?</div>
+        <div class="rnr-card-type" id="promo-card-type" style="color:#a78bfa;">REFLECT DEEP</div>
+        <div class="rnr-card-btns">
+          <button class="rnr-mini-btn rip" onclick="flipPromoCard('rip')">🔥 Rip More</button>
+          <button class="rnr-mini-btn reflect" onclick="flipPromoCard('reflect')">💭 Reflect Deep</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL CAPTURE -->
+<section class="email-section">
+  <div class="section-label" style="color:rgba(255,255,255,0.7)">Don't miss a thing</div>
+  <h2>Get 15% Off<br>Your First Order</h2>
+  <p>Plus a free Puff N' Process Digital Reflection Deck when you join the list.</p>
+  <div class="email-form">
+    <input class="email-input" type="email" placeholder="Your email address">
+    <button class="email-btn">Claim 15% Off</button>
+  </div>
+  <p class="email-disclaimer">No spam. Unsubscribe anytime. Discount code delivered instantly.</p>
+</section>
+
+<!-- RIP N' REFLECT FULL SECTION -->
+<section class="rnr-section" id="rip-reflect">
+  <div class="rnr-header">
+    <div class="rnr-eyebrow">The Digital Experience</div>
+    <h2 class="rnr-title">RIP N' REFLECT</h2>
+    <p class="rnr-subtitle">The smoke-friendly card game you play from your phone.<br>Every tap reveals a question. Every question opens a door.</p>
+    <div class="rnr-mode-btns">
+      <button class="rnr-mode-btn active" id="btn-rip" onclick="setMode('rip')">🔥 Rip More</button>
+      <button class="rnr-mode-btn" id="btn-reflect" onclick="setMode('reflect')">💭 Reflect Deep</button>
+    </div>
+    <div class="rnr-mode-desc" id="rnr-mode-desc">Funny, wild, unfiltered questions for when the vibe is right.</div>
+  </div>
+
+  <div class="rnr-game-area">
+    <div class="rnr-card-wrap" id="rnr-card-wrap">
+      <div class="rnr-main-card" id="rnr-main-card">
+        <div class="rnr-card-inner" id="rnr-card-inner">
+          <div class="rnr-card-face rnr-card-front">
+            <div class="rnr-card-brand">🃏 RIP N' REFLECT</div>
+            <div class="rnr-card-mode-tag" id="card-mode-tag">RIP MORE</div>
+            <div class="rnr-question-text" id="rnr-question">Tap a button to draw your first card</div>
+            <div class="rnr-card-number" id="rnr-card-num">Free · Card 0/10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rnr-draw-area">
+      <button class="rnr-draw-btn rip-btn" id="draw-rip" onclick="drawCard('rip')">
+        <span class="rnr-btn-icon">🔥</span>
+        <span class="rnr-btn-label">Rip More</span>
+        <span class="rnr-btn-sub">Wild & funny</span>
+      </button>
+      <div class="rnr-or">or</div>
+      <button class="rnr-draw-btn reflect-btn" id="draw-reflect" onclick="drawCard('reflect')">
+        <span class="rnr-btn-icon">💭</span>
+        <span class="rnr-btn-label">Reflect Deep</span>
+        <span class="rnr-btn-sub">Honest & healing</span>
+      </button>
+    </div>
+
+    <div class="rnr-counter-row">
+      <div class="rnr-counter-bar">
+        <div class="rnr-counter-fill" id="rnr-fill"></div>
+      </div>
+      <div class="rnr-counter-text" id="rnr-counter-text">0 of 10 free cards used</div>
+    </div>
+  </div>
+
+  <!-- UNLOCK GATE -->
+  <div class="rnr-gate" id="rnr-gate" style="display:none;">
+    <div class="rnr-gate-card">
+      <div style="font-size:48px;margin-bottom:16px;">🔒</div>
+      <h3 style="font-family:'Bebas Neue',sans-serif;font-size:40px;margin-bottom:8px;">You've Used Your <span style="color:var(--red)">10 Free Cards</span></h3>
+      <p style="color:rgba(255,255,255,0.6);font-size:16px;line-height:1.7;margin-bottom:32px;">Unlock the full deck — 100+ Rip More &amp; Reflect Deep cards — for just $4.99 one-time. Or enter your email to get 10 bonus cards free.</p>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;">
+        <a href="#" class="btn-primary">Unlock 100+ Cards — $4.99</a>
+      </div>
+      <div class="rnr-email-gate">
+        <input type="email" placeholder="Enter email for 10 bonus free cards" class="rnr-email-input" id="rnr-email-in">
+        <button class="rnr-email-submit" onclick="claimBonus()">Claim Bonus Cards</button>
+      </div>
+      <button style="background:none;border:none;color:rgba(255,255,255,0.35);font-size:13px;margin-top:20px;cursor:pointer;" onclick="resetGame()">↺ Start Over (replay free cards)</button>
+    </div>
+  </div>
+
+  <div class="rnr-vibes">
+    <div class="rnr-vibe-pill">🍃 Smoke Sessions</div>
+    <div class="rnr-vibe-pill">💑 Date Nights</div>
+    <div class="rnr-vibe-pill">👯 Girls Trips</div>
+    <div class="rnr-vibe-pill">🎉 Parties</div>
+    <div class="rnr-vibe-pill">🌙 Solo Reflection</div>
+    <div class="rnr-vibe-pill">🎨 Paint Nights</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="IMG_3689-removebg-preview.webp" alt="Brushes N' Blunts" onerror="this.outerHTML='<div style=\'font-family:Bebas Neue,sans-serif;font-size:24px;margin-bottom:20px;letter-spacing:0.05em;\'>BRUSHES N\' <span style=\'color:var(--red)\'>BLUNTS</span></div>'">
+      <p>The original smoke-friendly paint experience. Built in love, growing in legacy — for Aysha.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link">ig</a>
+        <a href="#" class="social-link">tk</a>
+        <a href="#" class="social-link">fb</a>
+        <a href="#" class="social-link">tw</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul class="footer-links">
+        <li><a href="#">Vinyl Kits</a></li>
+        <li><a href="#">Paint Kits</a></li>
+        <li><a href="#">Puff N' Process</a></li>
+        <li><a href="#">Bundle Deals</a></li>
+        <li><a href="#">Gift Cards</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Experiences</h4>
+      <ul class="footer-links">
+        <li><a href="#">Book A Party</a></li>
+        <li><a href="#">Upcoming Events</a></li>
+        <li><a href="#">Private Events</a></li>
+        <li><a href="#">Wholesale</a></li>
+        <li><a href="#">BNB Club</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul class="footer-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2025 Brushes N' Blunts. All rights reserved.</span>
+    <ul class="footer-legal">
+      <li><a href="#">Privacy Policy</a></li>
+      <li><a href="#">Terms of Service</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- FLOATING BAR -->
+<div class="float-bar">
+  <span class="float-text"><strong>🔥 Vinyl Kits</strong> — The most unique paint kit you can buy</span>
+  <a href="#vinyl" class="float-btn">Shop Vinyl Kits</a>
+</div>
+
+<script>
+// ─── CARD GAME DATA ───
+const ripCards = [
+  "What's the dumbest thing you ever did while high?",
+  "If you had to describe your high self in three words, what would they be?",
+  "What's the most embarrassing thing you've eaten in one sitting?",
+  "What conspiracy theory secretly makes a little sense to you?",
+  "What's the worst advice you've ever given someone?",
+  "If your inner child could see you right now, what would they say?",
+  "What's a habit you have that you'd never admit sober?",
+  "What song do you know every word to — but wish you didn't?",
+  "What's the most illegal-adjacent thing you've done that wasn't illegal?",
+  "If your last text was your bio, what would people think of you?",
+  "What's the weirdest thing you've Googled at 2am?",
+  "Which person in this room would survive a zombie apocalypse longest — and why?",
+  "What's something you pretend to understand but absolutely don't?",
+  "If your life had a Yelp review, what would the one-star review say?",
+  "What's your most embarrassing purchase you'd never return?",
+];
+
+const reflectCards = [
+  "What are you currently healing from?",
+  "What version of yourself are you leaving behind this year?",
+  "What does peace feel like for you — and when did you last feel it?",
+  "Who in your life tells you the truth, even when it hurts?",
+  "What's something you've outgrown but haven't let go of yet?",
+  "What would you do differently if nobody was watching?",
+  "When did you last feel truly proud of yourself?",
+  "What's one story you keep telling yourself that isn't true anymore?",
+  "What do you wish someone had told you five years ago?",
+  "What are you most afraid of losing?",
+  "What does your ideal version of yourself look like — and what's one step toward them?",
+  "What's something you've been avoiding thinking about?",
+  "Who deserves an apology from you that you haven't given?",
+  "What part of your childhood still lives in your daily decisions?",
+  "What would you do with your life if you weren't afraid?",
+];
+
+let cardCount = 0;
+const FREE_LIMIT = 10;
+let currentMode = 'rip';
+
+// Promo card mini-game
+const promoRip = [
+  "What's the dumbest thing you've Googled while high?",
+  "If you were a snack, what would you be — and why?",
+  "What's the most suspicious thing in your search history?"
+];
+const promoReflect = [
+  "What are you currently healing from?",
+  "What version of yourself are you leaving behind?",
+  "When did you last feel truly at peace?"
+];
+let promoRipIdx = 0, promoReflectIdx = 0;
+
+function flipPromoCard(type) {
+  const q = document.getElementById('promo-card-q');
+  const t = document.getElementById('promo-card-type');
+  q.style.opacity = '0';
+  setTimeout(() => {
+    if (type === 'rip') {
+      q.textContent = promoRip[promoRipIdx % promoRip.length];
+      t.textContent = 'RIP MORE';
+      t.style.color = '#ff8095';
+      promoRipIdx++;
+    } else {
+      q.textContent = promoReflect[promoReflectIdx % promoReflect.length];
+      t.textContent = 'REFLECT DEEP';
+      t.style.color = '#a78bfa';
+      promoReflectIdx++;
+    }
+    q.style.opacity = '1';
+  }, 200);
+}
+
+// Full card game
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('btn-rip').classList.toggle('active', mode === 'rip');
+  document.getElementById('btn-reflect').classList.toggle('active', mode === 'reflect');
+  const desc = document.getElementById('rnr-mode-desc');
+  desc.textContent = mode === 'rip'
+    ? 'Funny, wild, unfiltered questions for when the vibe is right.'
+    : 'Honest, healing questions that open real conversations.';
+}
+
+function drawCard(type) {
+  if (cardCount >= FREE_LIMIT) {
+    showGate(); return;
+  }
+
+  const card = document.getElementById('rnr-card-inner');
+  const qEl = document.getElementById('rnr-question');
+  const modeTag = document.getElementById('card-mode-tag');
+  const numEl = document.getElementById('rnr-card-num');
+  const face = document.querySelector('.rnr-card-front');
+
+  cardCount++;
+  const pct = (cardCount / FREE_LIMIT) * 100;
+  document.getElementById('rnr-fill').style.width = pct + '%';
+  document.getElementById('rnr-counter-text').textContent = `${cardCount} of ${FREE_LIMIT} free cards used`;
+  numEl.textContent = `Free · Card ${cardCount}/${FREE_LIMIT}`;
+
+  // Flip animation
+  card.classList.add('flipping');
+  setTimeout(() => {
+    let q;
+    if (type === 'rip') {
+      q = ripCards[Math.floor(Math.random() * ripCards.length)];
+      modeTag.textContent = 'RIP MORE';
+      modeTag.className = 'rnr-card-mode-tag rip-tag';
+      face.className = 'rnr-card-face rnr-card-front rip-style';
+    } else {
+      q = reflectCards[Math.floor(Math.random() * reflectCards.length)];
+      modeTag.textContent = 'REFLECT DEEP';
+      modeTag.className = 'rnr-card-mode-tag';
+      face.className = 'rnr-card-face rnr-card-front';
+    }
+    qEl.textContent = q;
+    card.classList.remove('flipping');
+  }, 300);
+
+  if (cardCount >= FREE_LIMIT) {
+    setTimeout(showGate, 800);
+  }
+}
+
+function showGate() {
+  document.getElementById('rnr-gate').style.display = 'block';
+  document.getElementById('rnr-card-wrap').style.opacity = '0.3';
+  document.getElementById('rnr-card-wrap').style.pointerEvents = 'none';
+  document.querySelectorAll('.rnr-draw-btn').forEach(b => { b.disabled = true; b.style.opacity = '0.3'; });
+}
+
+function resetGame() {
+  cardCount = 0;
+  document.getElementById('rnr-gate').style.display = 'none';
+  document.getElementById('rnr-card-wrap').style.opacity = '1';
+  document.getElementById('rnr-card-wrap').style.pointerEvents = '';
+  document.querySelectorAll('.rnr-draw-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
+  document.getElementById('rnr-fill').style.width = '0%';
+  document.getElementById('rnr-counter-text').textContent = '0 of 10 free cards used';
+  document.getElementById('rnr-question').textContent = 'Tap a button to draw your first card';
+  document.getElementById('rnr-card-num').textContent = 'Free · Card 0/10';
+}
+
+function claimBonus() {
+  const email = document.getElementById('rnr-email-in').value;
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  alert('🎉 Bonus cards unlocked! Check your email for the link.');
+}
+</script>
+
+</body>
+</html>
